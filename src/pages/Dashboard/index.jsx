@@ -1,19 +1,25 @@
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { categories } from "../../data/categories";
+import { getCurrentMonth, filterListByMonth } from "../../helpers/dateFilter";
+import { TableArea } from "../../components/TableArea";
+import { InfoArea } from "../../components/InfoArea";
+import { InputArea } from "../../components/InputArea";
 import "./index.css";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const isAuthenticated = JSON.parse(localStorage.getItem("authenticated"));
   // Crie um state para list iniciando com um array vazio.
-  const [list, setList] = ([]);
+  const [list, setList] = useState([]);
   // Crie um state para filteredList iniciando com um array vazio.
-  const [filteredList, setFilteredList] = ([]);
+  const [filteredList, setFilteredList] = useState([]);
   // Crie um state para currentMonth iniciando com a função getCurrentMonth.
-  const [currentMonth, setCurrentMontht] = (getCurrentMonth());
+  const [currentMonth, setCurrentMonth] = useState(getCurrentMonth());
   // Crie um state para income iniciando como 0.
-  const [income, setIncome] = (0);
+  const [income, setIncome] = useState(0);
   // Crie um state para expense iniciando como 0.
-  const [expense, setExpense] = (0);
+  const [expense, setExpense] = useState(0);
   /*
       Crie um useEffect que tenha list, currentMonth e setFilteredList como dependência.
       Dentro dele crie uma const monthList que recebe o valor da função filterListByMonth(list, currentMonth)- OK
@@ -45,7 +51,7 @@ const Dashboard = () => {
       incomeCount += filteredList[i].value
     }
     setIncome(incomeCount)
-    setExpense(expanseCount)
+    setExpense(expenseCount)
   }, [filteredList]);
 
 
@@ -58,10 +64,11 @@ const Dashboard = () => {
       Em seguida dê push em newList com o valor de item.
       Em seguida use setList com o valor de newList.
   */
- const handleAddItem = (item)=>{
-  let newList = ({})
-  setList (newList)
- }
+  const handleAddItem = (item) => {
+    let newList = [...list]
+    newList.push(item)
+    setList(newList)
+  }
 
   const handleLogout = (e) => {
     e.preventDefault();
@@ -82,12 +89,16 @@ const Dashboard = () => {
         </button>
       </div>
       <div className="body">
-        {/* Insira a InfoArea e suas props */}
+        {}
+        
+        <InfoArea currentMonth={currentMonth} onMonthChange = {handleMonthChange} income={income} expense = {expense}/>
 
         {/* Insira a InputArea e sua prop */}
+        <InputArea onAdd = {handleAddItem}/>
 
         {/* Insira a TableArea e sua prop */}
-      </div>
+        <TableArea list={filteredList} />
+      </div> 
     </div>
   );
 };

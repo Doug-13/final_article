@@ -3,7 +3,7 @@ import { categories } from "../../data/categories";
 import "./index.css";
 
 // Insira a prop necessária.
-export const TableItem = () => {
+export const TableItem = ({item}) => {
   // Insira nos elementos td a className="tableColumn"
   return (
     <tr>

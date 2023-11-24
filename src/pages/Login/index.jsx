@@ -1,16 +1,17 @@
-import { redirect, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./index.css";
 
 const Login = () => {
   const navigate = useNavigate();
   // Crie um state para username iniciando como string vazia.
-  const [username, setUsername] = ("");
+  const [username, setUsername] = useState("");
 
   // Crie um state para password iniciando como string vazia.
-  const [password, setPassword] = ("");
+  const [password, setPassword] = useState("");
 
   // Crie um state para message iniciando como string vazia.
-  const [message, setMessage] = ("");
+  const [message, setMessage] = useState("");
 
 
   const handleLogin = async () => {
